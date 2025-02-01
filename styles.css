@@ -1,0 +1,186 @@
+/* General Styles */
+body {
+    background-color: #121212;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    padding-top: 50px;
+}
+
+.container {
+    max-width: 800px;
+    margin-top: 50px;
+}
+
+.header {
+    text-align: center;
+    color: #00ff00;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+/* Button Styles */
+.btn-primary {
+    background: #007bff;
+    border: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+.btn-file {
+    background-color: #ff6347;
+    border: none;
+    color: white;
+    font-size: 14px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-file:hover {
+    background-color: #ff4500;
+}
+
+/* Input Fields */
+.form-control {
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.form-control:focus {
+    border-color: #00ff00;
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+/* Results Box */
+.result-box {
+    background: #1e1e1e;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* Copy Button */
+.copy-btn {
+    color: #00ff00;
+    cursor: pointer;
+}
+
+.copy-btn:hover {
+    text-decoration: underline;
+}
+
+/* Input Containers */
+.input-container {
+    margin-bottom: 30px;
+}
+
+/* Error Message */
+.error {
+    color: #ff3333;
+    font-size: 14px;
+}
+
+/* Neon Glow and Animation */
+@keyframes glow {
+    0% { text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #00ff00; }
+    50% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; }
+    100% { text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #00ff00; }
+}
+
+h1, h2, h3, h4 {
+    animation: glow 1.5s infinite;
+}
+
+/* Dark Mode & Neon */
+body {
+    background-color: #121212;
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.navbar {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Stylish Form */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    background-color: #333;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.form-control:focus {
+    border-color: #00ff00;
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+/* Additional Input Focus Styles */
+input[type="file"]::-webkit-file-upload-button {
+    background-color: #ff6347;
+    border: none;
+    color: white;
+    font-size: 14px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #ff4500;
+}
+
+/* Group chat finder section */
+#gcResult {
+    padding: 10px;
+    background-color: #333;
+    border-radius: 8px;
+}
+
+#gcResult h5 {
+    margin-bottom: 20px;
+}
+
+#gcResult ul {
+    list-style: none;
+}
+
+#gcResult ul li {
+    padding: 5px 0;
+    color: #00ff00;
+}
+
+#gcResult ul li a {
+    color: #00ff00;
+    text-decoration: none;
+}
+
+#gcResult ul li a:hover {
+    text-decoration: underline;
+}
