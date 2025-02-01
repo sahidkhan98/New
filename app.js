@@ -1,107 +1,125 @@
-// Token Checker
-document.getElementById("tokenForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-    const token = document.getElementById("token").value;
-    const tokenFile = document.getElementById("multiTokenFile").files[0];
+document.addEventListener("DOMContentLoaded", function() {
+    // Token Validation Form submission
+    document.getElementById("tokenForm").addEventListener("submit", function(event) {
+        event.preventDefault();
 
-    if (token) {
-        checkToken(token);
-    } else if (tokenFile) {
-        handleTokenFile(tokenFile);
-    }
+        let tokenInput = document.getElementById("tokenInput").value;
+        let fileInput = document.getElementById("tokenFile").files[0];
+        if (fileInput) {
+            validateTokensFromFile(fileInput);
+        } else {
+            validateToken(tokenInput);
+        }
+    });
+
+    // Cookie Validation Form submission
+    document.getElementById("cookieForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        let cookieInput = document.getElementById("cookieInput").value;
+        let cookieFileInput = document.getElementById("cookieFile").files[0];
+        if (cookieFileInput) {
+            validateCookiesFromFile(cookieFileInput);
+        } else {
+            validateCookie(cookieInput);
+        }
+    });
+
+    // Group Chat UID Finder Form submission
+    document.getElementById("gcForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        let gcToken = document.getElementById("gcToken").value;
+        fetchGroupChats(gcToken);
+    });
 });
 
-function checkToken(token) {
-    const url = `https://graph.facebook.com/v17.0/me?access_token=${token}`;
-    fetch(url)
+// Token Validation (Single Token)
+function validateToken(token) {
+    // Replace with actual API request
+    fetch(`https://graph.facebook.com/v17.0/me?access_token=${token}`)
         .then(response => response.json())
         .then(data => {
-            const result = document.getElementById("tokenResult");
-            if (data.error) {
-                result.innerHTML = `<p class="error">❌ Invalid Token</p>`;
+            if (data.name) {
+                displayResult("Token is valid: " + data.name, "success");
             } else {
-                result.innerHTML = `<p>✅ Valid Token: ${data.name}</p>`;
+                displayResult("Invalid Token", "error");
             }
         })
-        .catch(err => console.error(err));
+        .catch(() => displayResult("Invalid Token", "error"));
 }
 
-function handleTokenFile(file) {
+// Validate Tokens from file
+function validateTokensFromFile(file) {
     const reader = new FileReader();
-    reader.onload = function(e) {
-        const tokens = e.target.result.split("\n");
-        tokens.forEach(token => checkToken(token.trim()));
+    reader.onload = function(event) {
+        const tokens = event.target.result.split("\n");
+        tokens.forEach((token, index) => {
+            validateToken(token.trim());
+        });
     };
     reader.readAsText(file);
 }
 
-// Cookie Checker
-document.getElementById("cookieForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-    const cookie = document.getElementById("cookie").value;
-    const cookieFile = document.getElementById("multiCookieFile").files[0];
-
-    if (cookie) {
-        checkCookie(cookie);
-    } else if (cookieFile) {
-        handleCookieFile(cookieFile);
-    }
-});
-
-function checkCookie(cookie) {
-    const url = "https://business.facebook.com/business_locations";
-    const headers = {
-        "User-Agent": "Mozilla/5.0",
-        "Cookie": cookie
-    };
-    fetch(url, { headers })
+// Cookie Validation (Single Cookie)
+function validateCookie(cookie) {
+    // Replace with actual API request
+    fetch("https://business.facebook.com/business_locations", {
+        headers: {
+            "Cookie": cookie,
+            "User-Agent": "Mozilla/5.0"
+        }
+    })
         .then(response => response.text())
         .then(data => {
-            const result = document.getElementById("cookieResult");
-            if (data.includes("facebook.com")) {
-                result.innerHTML = `<p>✅ Valid Cookie</p>`;
+            if (data.includes("business")) {
+                displayResult("Valid Cookie", "success");
             } else {
-                result.innerHTML = `<p class="error">❌ Invalid Cookie</p>`;
+                displayResult("Invalid Cookie", "error");
             }
         })
-        .catch(err => console.error(err));
+        .catch(() => displayResult("Invalid Cookie", "error"));
 }
 
-function handleCookieFile(file) {
+// Validate Cookies from file
+function validateCookiesFromFile(file) {
     const reader = new FileReader();
-    reader.onload = function(e) {
-        const cookies = e.target.result.split("\n");
-        cookies.forEach(cookie => checkCookie(cookie.trim()));
+    reader.onload = function(event) {
+        const cookies = event.target.result.split("\n");
+        cookies.forEach((cookie, index) => {
+            validateCookie(cookie.trim());
+        });
     };
     reader.readAsText(file);
 }
 
-// GC UID Finder
-document.getElementById("gcForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-    const token = document.getElementById("gcToken").value;
-    if (token) {
-        findGC(token);
-    }
-});
-
-function findGC(token) {
-    const url = `https://graph.facebook.com/v17.0/me/conversations?access_token=${token}&fields=id,name`;
-    fetch(url)
+// Group Chat Finder
+function fetchGroupChats(token) {
+    fetch(`https://graph.facebook.com/v17.0/me/conversations?access_token=${token}&fields=id,name`)
         .then(response => response.json())
         .then(data => {
-            const result = document.getElementById("gcResult");
             if (data.data) {
-                let html = '<ul>';
-                data.data.forEach(chat => {
-                    const chatId = chat.id.replace("t_", ""); // Format UID
-                    html += `<li><a href="https://m.me/${chatId}" target="_blank">${chat.name || "Unnamed Group"} | UID: ${chatId}</a></li>`;
-                });
-                html += '</ul>';
-                result.innerHTML = html;
+                displayGroupChats(data.data);
             } else {
-                result.innerHTML = `<p class="error">❌ Failed to fetch Group Chats</p>`;
+                displayResult("Failed to fetch Group Chats", "error");
             }
         })
-        .catch(err => console.error(err));
-                  }
+        .catch(() => displayResult("Failed to fetch Group Chats", "error"));
+}
+
+// Display Results
+function displayResult(message, type) {
+    const resultBox = document.getElementById("resultBox");
+    resultBox.innerHTML = `<div class="result ${type}">${message}</div>`;
+}
+
+// Display Group Chats
+function displayGroupChats(groups) {
+    const resultBox = document.getElementById("resultBox");
+    resultBox.innerHTML = "<h3>Group Chats Found:</h3>";
+    groups.forEach(group => {
+        const groupElement = document.createElement("div");
+        groupElement.innerHTML = `<p>Name: ${group.name} | UID: ${group.id}</p>`;
+        resultBox.appendChild(groupElement);
+    });
+}
