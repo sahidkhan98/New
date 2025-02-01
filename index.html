@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Tools</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="header">Facebook Tools</h1>
+        
+        <div class="tool-section">
+            <h3>Token Checker</h3>
+            <form id="tokenForm">
+                <div class="input-container">
+                    <label for="token">Enter Single Token</label>
+                    <input type="text" id="token" class="form-control" placeholder="Enter your token here">
+                </div>
+                <div class="input-container">
+                    <label for="multiTokenFile">Or Upload Token File</label>
+                    <input type="file" id="multiTokenFile" class="form-control" accept=".txt">
+                </div>
+                <button type="submit" class="btn-primary">Check Token</button>
+            </form>
+            <div id="tokenResult"></div>
+        </div>
+
+        <div class="tool-section">
+            <h3>Cookie Checker</h3>
+            <form id="cookieForm">
+                <div class="input-container">
+                    <label for="cookie">Enter Single Cookie</label>
+                    <input type="text" id="cookie" class="form-control" placeholder="Enter your cookie here">
+                </div>
+                <div class="input-container">
+                    <label for="multiCookieFile">Or Upload Cookie File</label>
+                    <input type="file" id="multiCookieFile" class="form-control" accept=".txt">
+                </div>
+                <button type="submit" class="btn-primary">Check Cookie</button>
+            </form>
+            <div id="cookieResult"></div>
+        </div>
+
+        <div class="tool-section">
+            <h3>Group Chat UID Finder</h3>
+            <form id="gcForm">
+                <div class="input-container">
+                    <label for="gcToken">Enter Token to Find Group Chats</label>
+                    <input type="text" id="gcToken" class="form-control" placeholder="Enter token for groups">
+                </div>
+                <button type="submit" class="btn-primary">Find Groups</button>
+            </form>
+            <div id="gcResult"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
